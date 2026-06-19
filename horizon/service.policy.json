@@ -1,0 +1,15 @@
+{
+  "properties": [
+    {
+      "name": "purpose",
+      "value": "ai-inference"
+    },
+    {
+      "name": "service-type",
+      "value": "ollama"
+    }
+  ],
+  "constraints": [
+    "openhorizon.arch == amd64 OR openhorizon.arch == arm64"
+  ]
+}

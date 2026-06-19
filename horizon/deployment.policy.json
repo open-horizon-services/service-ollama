@@ -1,0 +1,33 @@
+{
+  "label": "Ollama Deployment Policy",
+  "description": "Deployment policy for Ollama AI service on edge nodes",
+  "service": {
+    "name": "service-ollama",
+    "org": "$HZN_ORG_ID",
+    "arch": "*",
+    "serviceVersions": [
+      {
+        "version": "0.1.0",
+        "priority": {},
+        "upgradePolicy": {}
+      }
+    ],
+    "nodeHealth": {
+      "missing_heartbeat_interval": 600,
+      "check_agreement_status": 120
+    }
+  },
+  "constraints": [
+    "openhorizon.memory >= 2048",
+    "openhorizon.storage >= 10240",
+    "openhorizon.arch == amd64 OR openhorizon.arch == arm64"
+  ],
+  "properties": [
+    {
+      "name": "purpose",
+      "value": "ai-inference"
+    }
+  ],
+  "userInput": [],
+  "secretBinding": []
+}

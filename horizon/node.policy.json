@@ -10,7 +10,7 @@
     },
     {
       "name": "openhorizon.arch",
-      "value": "amd64"
+      "value": "$ARCH"
     },
     {
       "name": "purpose",

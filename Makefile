@@ -36,8 +36,10 @@ export DEPLOYMENT_POLICY_NAME ?= deployment-policy-ollama
 export NODE_POLICY_NAME ?= node-policy-ollama
 export SERVICE_NAME ?= service-ollama
 export SERVICE_VERSION ?= 0.0.1
-# Default ARCH to the architecture of this machine (assumes hzn CLI installed)
-export ARCH ?= amd64
+# Default ARCH to the architecture of this machine
+# Convert uname -m output to Open Horizon architecture names
+DETECTED_ARCH := $(shell uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+export ARCH ?= $(DETECTED_ARCH)
 # Detect Operating System running Make
 OS := $(shell uname -s)
 default: init run browse
@@ -96,11 +98,20 @@ push:
 	@echo "There is no Docker image push process since this container is provided by a third-party from official sources."
 publish: publish-service publish-service-policy publish-deployment-policy agent-run browse
 # Pull, not push, Docker image since provided by third party
-publish-service:
-	@echo "=================="
-	@echo "PUBLISHING SERVICE"
-	@echo "=================="
-	@hzn exchange service publish -O -P --json-file=horizon/service.definition.json
+publish-service: publish-service-amd64 publish-service-arm64
+
+publish-service-amd64:
+	@echo "=============================="
+	@echo "PUBLISHING SERVICE FOR AMD64"
+	@echo "=============================="
+	@ARCH=amd64 hzn exchange service publish -O -P --json-file=horizon/service.definition.json
+	@echo ""
+
+publish-service-arm64:
+	@echo "=============================="
+	@echo "PUBLISHING SERVICE FOR ARM64"
+	@echo "=============================="
+	@hzn exchange service publish -O -P --json-file=horizon/service.definition.arm64.json
 	@echo ""
 remove-service:
 	@echo "=================="

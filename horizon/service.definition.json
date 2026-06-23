@@ -14,7 +14,7 @@
       "name": "OLLAMA_HOST",
       "label": "Ollama API host binding",
       "type": "string",
-      "defaultValue": "0.0.0.0:11434"
+      "defaultValue": "0.0.0.0"
     },
     {
       "name": "OLLAMA_MODELS",

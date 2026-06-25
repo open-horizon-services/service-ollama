@@ -1,0 +1,39 @@
+{
+  "properties": [
+    {
+      "name": "openhorizon.memory",
+      "value": 4096
+    },
+    {
+      "name": "openhorizon.storage",
+      "value": 20480
+    },
+    {
+      "name": "openhorizon.arch",
+      "value": "$ARCH"
+    },
+    {
+      "name": "purpose",
+      "value": "ai-inference"
+    }
+  ],
+  "constraints": [],
+  "service": [
+    {
+      "name": "service-ollama",
+      "org": "$HZN_ORG_ID",
+      "arch": "*",
+      "serviceVersions": [
+        {
+          "version": "0.1.0",
+          "priority": {
+            "priority_value": 50,
+            "retries": 1,
+            "retry_durations": 3600,
+            "verified_durations": 52
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "org": "$HZN_ORG_ID",
+  "label": "Ollama AI Service",
+  "description": "Ollama large language model service for edge deployment",
+  "public": true,
+  "documentation": "https://github.com/open-horizon-services/service-ollama",
+  "url": "service-ollama",
+  "version": "0.1.0",
+  "arch": "arm64",
+  "sharable": "singleton",
+  "requiredServices": [],
+  "userInput": [
+    {
+      "name": "OLLAMA_HOST",
+      "label": "Ollama API host binding",
+      "type": "string",
+      "defaultValue": "0.0.0.0"
+    },
+    {
+      "name": "OLLAMA_MODELS",
+      "label": "Ollama models directory",
+      "type": "string",
+      "defaultValue": "/root/.ollama/models"
+    },
+    {
+      "name": "OLLAMA_KEEP_ALIVE",
+      "label": "Duration to keep models loaded in memory",
+      "type": "string",
+      "defaultValue": "5m"
+    }
+  ],
+  "deployment": {
+    "services": {
+      "ollama": {
+        "image": "docker.io/ollama/ollama:latest",
+        "privileged": false,
+        "ports": [
+          {
+            "HostPort": "11434:11434/tcp",
+            "HostIP": "0.0.0.0"
+          }
+        ],
+        "binds": [
+          "/var/ollama:/root/.ollama:rw"
+        ],
+        "environment": [
+          "OLLAMA_HOST=$OLLAMA_HOST",
+          "OLLAMA_MODELS=$OLLAMA_MODELS",
+          "OLLAMA_KEEP_ALIVE=$OLLAMA_KEEP_ALIVE"
+        ]
+      }
+    }
+  }
+}
